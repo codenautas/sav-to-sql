@@ -1,0 +1,19 @@
+{
+    "name": "sav-to-sql",
+    "description": "PSPP .sav files to sql",
+    "version": "0.0.1",
+    "files":["lib"],
+    "main":"lib/sav-to.sql.js",
+    "types":"lib/sav-to.sql.d.ts",
+    "dependencies": {
+        "sav-reader": "1.0.8"
+    },
+    "devDependencies": {
+        "@types/node": "^14.0.11"
+    },
+    "scripts": {
+        "prepare": "tsc -p tsconfig-lib.json",
+        "watch:buildL": "tsc --watch -p tsconfig-lib.json",
+        "start": "node lib/sav-to-sql"
+    }
+}
