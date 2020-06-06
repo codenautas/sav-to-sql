@@ -48,7 +48,7 @@ class SavReader{
         getValueLabels:(varaibleName:string)=>{value:number, label:string}[]
     }
     open():Promise<void>
-    readNextRow():SavReader.RowDesc|null
+    async readNextRow():Promise<SavReader.RowDesc|null>
 }
 
 export = SavReader;

@@ -18,7 +18,7 @@ function quoteLiteral(value:any){
     return `'${value.replace(/'/g,"''")}'`;
 }
 
-async function dumpSav(savFileName:string, opts:{
+export async function savFileToSqlString(savFileName:string, opts:{
     tableName?:string
 }):Promise<string> {
     let sav = new SavReader(savFileName)
@@ -56,6 +56,9 @@ async function dumpSav(savFileName:string, opts:{
     })
     sql.push(sqlFields.join(',\n'))
     sql.push(');')
+    sql.push('')
+    sql.push(sqlComments.join('\n'))
+    sql.push('')
     let row:SavReader.RowDesc|null = null;
     var tick = new Date().getTime()+1000;
     do {
@@ -71,9 +74,7 @@ async function dumpSav(savFileName:string, opts:{
     return sql.join('\n');
 }
 
-async function provisorio(savFileName:string, sqlFileName:string){
-    var sql = await dumpSav(savFileName,{});
-    await fs.writeFile(sqlFileName, sql, {encoding:'utf8'});
+export async function dumpSavInSql(savFileName:string, sqlFileName:string, opts:{mode?:string, flags?:string}){
+    var sql = await savFileToSqlString(savFileName,{});
+    await fs.writeFile(sqlFileName, sql, {encoding:'utf8', ...opts});
 }
-
-provisorio('local-entrada.sav', 'local-salida.sql');
